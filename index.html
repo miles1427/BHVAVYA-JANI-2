@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Personality Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      padding: 20px;
+    }
+    .question-box {
+      background: #fff;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    #result {
+      font-weight: bold;
+      font-size: 18px;
+      margin-top: 20px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Personality Test</h1>
+
+  <form id="quizForm">
+    <div class="question-box">
+      <p>1. What do you prefer doing on a weekend?</p>
+      <label><input type="radio" name="q1" value="introvert"> Reading a book at home</label><br>
+      <label><input type="radio" name="q1" value="extrovert"> Going to a party</label><br>
+      <label><input type="radio" name="q1" value="thinker"> Solving puzzles</label><br>
+      <label><input type="radio" name="q1" value="feeler"> Helping someone</label>
+    </div>
+
+    <div class="question-box">
+      <p>2. How do you make decisions?</p>
+      <label><input type="radio" name="q2" value="thinker"> Based on logic and analysis</label><br>
+      <label><input type="radio" name="q2" value="feeler"> Based on emotions and values</label><br>
+      <label><input type="radio" name="q2" value="introvert"> Whatever feels less stressful</label><br>
+      <label><input type="radio" name="q2" value="extrovert"> Whatever sounds most exciting</label>
+    </div>
+
+    <div class="question-box">
+      <p>3. You're in a new group. What do you do?</p>
+      <label><input type="radio" name="q3" value="introvert"> Observe and wait</label><br>
+      <label><input type="radio" name="q3" value="extrovert"> Start conversations</label><br>
+      <label><input type="radio" name="q3" value="thinker"> Analyze first</label><br>
+      <label><input type="radio" name="q3" value="feeler"> Make others comfortable</label>
+    </div>
+
+    <button type="button" onclick="submitQuiz()">Submit</button>
+  </form>
+
+  <div id="result"></div>
+
+  <script>
+    function submitQuiz() {
+      let answers = ['q1', 'q2', 'q3'];
+      let scores = {
+        introvert: 0,
+        extrovert: 0,
+        thinker: 0,
+        feeler: 0
+      };
+
+      for (let q of answers) {
+        let selected = document.querySelector(`input[name="${q}"]:checked`);
+        if (selected) {
+          scores[selected.value]++;
+        } else {
+          alert("Please answer all questions!");
+          return;
+        }
+      }
+
+      let resultType = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+      let descriptions = {
+        introvert: "You enjoy your own company and calm surroundings.",
+        extrovert: "You're outgoing and love social energy.",
+        thinker: "You rely on logic and analysis.",
+        feeler: "You make decisions with empathy and care."
+      };
+
+      document.getElementById("result").innerText =
+        `Your personality type is: ${resultType.toUpperCase()} \n${descriptions[resultType]}`;
+    }
+  </script>
+
+</body>
+</html>
